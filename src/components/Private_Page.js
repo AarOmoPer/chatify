@@ -6,9 +6,6 @@ import withAuthUser from './higher_order_components/withAuthUser';
 
 class Private_Page extends React.Component {
   render() {
-    Private_Page.contextTypes = {
-      authUser: PropTypes.object
-    }
     const authUser = {...this.context.authUser}
     return (
       <section className=''>
@@ -18,6 +15,10 @@ class Private_Page extends React.Component {
       </section>
     )
   }
+}
+
+Private_Page.contextTypes = {
+  authUser: PropTypes.object
 }
 
 const authCondition = (authUser) => !!authUser;

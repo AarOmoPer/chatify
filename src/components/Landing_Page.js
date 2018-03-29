@@ -7,9 +7,6 @@ import PropTypes from 'prop-types'
 
 class Landing_Page extends React.Component{
   render(){
-    Landing_Page.contextTypes ={
-      authUser: PropTypes.object
-    }
     const {authUser} = this.context
     return(
       <section className=''>
@@ -29,6 +26,10 @@ class Landing_Page extends React.Component{
       history.push('/private')
     )
   }
+}
+
+Landing_Page.contextTypes ={
+  authUser: PropTypes.object
 }
 
 export default withAuthUser(withRouter(Landing_Page))
