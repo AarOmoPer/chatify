@@ -3,7 +3,7 @@ import React from 'react';
 class Public_Page extends React.Component{
   render(){
     return(
-      <section className=''>
+      <section>
         <p>Public page</p>
       </section>
     )
