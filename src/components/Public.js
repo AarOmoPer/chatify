@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Public_Page extends React.Component{
+class Public extends React.Component{
   render(){
     return(
       <section>
@@ -10,4 +10,4 @@ class Public_Page extends React.Component{
   }
 }
 
-export default Public_Page
+export default Public

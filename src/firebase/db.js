@@ -1,10 +1,20 @@
-import { db } from './firebase';
+import {db} from './firebase';
 
-export const doCreateUser = (id, username, email) =>
-  db.ref(`users/${id}`).set({
-    username,
-    email,
-  });
+export const createUser = (uid, username, email) => {
+  return db
+    .ref('users')
+    .once('value')
+    .then(res => {
+      const usersUid = (res.val() === null) ? [] : Object.keys(res.val());
+      return usersUid.includes(uid)
+        ? null
+        : db
+          .ref(`users/${uid}`)
+          .set({username, email});
+    })
+}
 
-export const onceGetUsers = () =>
-  db.ref('users').once('value');
+export const getUser = uid => db
+  .ref(`users/${uid}`)
+  .once('value')
+  .then(res => res.val())

@@ -1,7 +1,7 @@
 import React from 'react';
 import {auth} from '../firebase'
 import {Redirect} from 'react-router-dom'
-import {doCreateUser} from '../firebase/db'
+import {createUser} from '../firebase/db'
 import PropTypes from 'prop-types'
 
 class SignIn extends React.Component {
@@ -24,8 +24,7 @@ class SignIn extends React.Component {
       .doSignInWithGoogle()
       .then(res => {
         const user = res.user
-        doCreateUser(user.uid, user.displayName, user.email)
-        return
+        createUser(user.uid, user.displayName, user.email)
       })
   }
 }
