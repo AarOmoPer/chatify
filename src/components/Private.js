@@ -14,7 +14,7 @@ class Private extends React.Component {
     view: true
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const {authUser} = this.context
     setTimeout(() => {
       getUser(authUser.uid).then(user => this.setState({user}))
@@ -24,17 +24,32 @@ class Private extends React.Component {
   render() {
     const {user, view} = this.state;
     return (
-      <section>
-        <button type='button' onClick={auth.doSignOut}>Sign out</button>
-        <p>User: {user && user.username + ', ' + user.email}</p>
-        <p><Contacts /></p>
-        <button onClick={this.toggleView}>Toggle</button>
-        <p>{view ? <ChatRoom /> : <Notification />}</p>
+      <section className='hero-body'>
+        <section className='container'>
+          <section className='title'>
+            <p className="control" onClick={auth.doSignOut}>
+              <a className="button is-danger">
+                <span className="icon is-small">
+                  <i className="fa fa-sign-out"></i>
+                </span>
+                <span>Sign out</span>
+              </a>
+            </p>
+          </section>
+          <h1 className='title'>{user && user.username}</h1>
+          <p><Contacts/></p>
+          <button className='button is-danger' onClick={this.toggleView}>Toggle</button>
+          {view
+            ? <ChatRoom/>
+            : <Notification/>}
+        </section>
       </section>
     )
   }
 
-  toggleView = () => this.setState({view: !this.state.view})
+  toggleView = () => this.setState({
+    view: !this.state.view
+  })
 }
 
 Private.contextTypes = {

@@ -1,8 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types'
+import {getContacts, addContact, removeContact} from '../firebase/db'
 
 class Contacts extends React.Component{
   state = {
-    contacts: [{name: 'Jason'}, {name: 'Sally'}]
+    contacts: [{name: 'Bob'}, {name: 'Sally'}]
+  }
+
+  componentDidMount(){
+    const {authUser} = this.context
+    getContacts(authUser.uid).then(console.log)
   }
 
   render(){
@@ -16,6 +23,10 @@ class Contacts extends React.Component{
       </section>
     )
   }
+}
+
+Contacts.contextTypes = {
+  authUser: PropTypes.object
 }
 
 export default Contacts;

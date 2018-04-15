@@ -2,6 +2,9 @@ import React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom'
 import {withAuthUser} from './higherOrderComponents'
 
+import 'bulma/css/bulma.css'
+import 'font-awesome/css/font-awesome.min.css';
+
 import SignIn from './SignIn'
 import Public from './Public'
 import Private from './Private'
@@ -12,7 +15,7 @@ class App extends React.Component{
     return(
       <section>
         <BrowserRouter>
-            <section>
+            <section className='hero is-fullheight'>
               <Route exact path='/' component={SignIn} />
               <Route exact path='/public' component={Public} />
               <Route path='/private' component={Private} />
