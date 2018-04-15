@@ -12,7 +12,7 @@ class SignIn extends React.Component {
         {authUser
           ? <Redirect to='/private'/>
           : <section>
-            <p>Sign-In Page</p>
+            <p>Chatify</p>
             <button type='button' onClick={this.handleSignIn}>Sign in</button>
           </section>}
       </section>
