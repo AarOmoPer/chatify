@@ -8,13 +8,15 @@ class SignIn extends React.Component {
   render() {
     const {authUser} = this.context;
     return (
-      <section>
-        {authUser
-          ? <Redirect to='/private'/>
-          : <section>
-            <p>Chatify</p>
-            <button type='button' onClick={this.handleSignIn}>Sign in</button>
-          </section>}
+      <section className='hero-body'>
+        <section className='container has-text-centered'>
+          {authUser
+            ? <Redirect to='/private'/>
+            : <section>
+              <h1 className='title is-size-1'>Chatify</h1>
+              <button className='button is-danger' type='button' onClick={this.handleSignIn}>Sign in</button>
+            </section>}
+        </section>
       </section>
     )
   }

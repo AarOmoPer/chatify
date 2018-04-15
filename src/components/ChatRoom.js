@@ -4,7 +4,7 @@ class ChatRoom extends React.Component{
   render(){
     return(
       <section>
-        Chat here.
+        ChatRoom
       </section>
     )
   }
