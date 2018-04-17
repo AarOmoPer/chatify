@@ -1,0 +1,15 @@
+.flex-container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.round-up{
+  border-radius: 1000em;
+}
+
+.large-picture{
+  min-width: 256px;
+  max-width: 256px;
+  min-height: 256px;
+  max-height: 256px;
+}
