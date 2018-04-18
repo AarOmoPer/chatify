@@ -13,3 +13,8 @@
   min-height: 256px;
   max-height: 256px;
 }
+
+.medium-space{
+  min-height: 40px;
+  min-width: 100%;
+}

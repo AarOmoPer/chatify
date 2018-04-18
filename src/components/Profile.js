@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom'
 import {getUser, updateUsername, updateUserImage} from '../firebase/db'
-import {getUserImage, storeUserImage} from '../firebase/store'
+import {storeUserImage} from '../firebase/store'
 import {withAuthorization} from './higherOrderComponents';
 
 import BackButton from './BackButton';
@@ -34,75 +33,77 @@ class Profile extends React.Component {
               <figure className="image is-256x256 large-picture">
                 <img
                   className='round-up'
+                  alt='Loading'
                   src={user && user.image
                   ? user.image
                   : ""}/>
               </figure>
             </section>
+            
+            <section className='medium-space'>
+              {uploadProgress > 0 && <progress className="progress is-danger" value={uploadProgress} max="100"/>}
+            </section>
 
-            {/* <input type='file' onChange={this.updateUserImage}/> */}
-
-            {uploadProgress > 0 && <progress class="progress is-danger" value={uploadProgress} max="100"/>}
-
-            <div class="file is-pulled-right">
-              <label class="file-label">
+            <section className="file is-pulled-right">
+              <label className="file-label">
                 <input
-                  class="file-input"
+                  className="file-input"
                   type="file"
                   onChange={this.updateUserImage}
                   name="resume"/>
-                <span class="file-cta round-up is-danger">
-                  <span class="file-icon">
-                    <i class="fa fa-upload"></i>
+                <span className="file-cta round-up">
+                  <span className="file-icon">
+                    <i className="fa fa-upload"></i>
                   </span>
-                  <span class="file-label">
-                    New
+                  <span className="file-label">
+                    Change profile photo 
                   </span>
                 </span>
               </label>
-            </div>
+            </section>
             
             <br />
             <br />
 
-            <div class="field">
-              <label class="label">Username</label>
-              <div class="control has-icons-left has-icons-right">
+            <section className="field">
+              <label className="label">Username</label>
+              <section className="control has-icons-left has-icons-right">
                 <input
-                  class="input"
+                  className="input"
                   type="text"
                   placeholder={user && user.username}
                   value={newUsername}
                   onChange={this.appendToUsername}/>
-                <span class="icon is-small is-left">
-                  <i class="fa fa-user"></i>
+                <span className="icon is-small is-left">
+                  <i className="fa fa-user"></i>
                 </span>
-                <span class="icon is-small is-right">
-                  <i class="fa fa-check"></i>
+                <span className="icon is-small is-right">
+                  <i className="fa fa-check"></i>
                 </span>
-              </div>
-              <p class={`help is-${usernameMessage.colour}`}>{usernameMessage.text}</p>
-            </div>
+              </section>
+              <p className={`help is-${usernameMessage.colour}`}>{usernameMessage.text}</p>
+            </section>
 
-            <div class="field">
-              <label class="label">Email</label>
-              <div class="control has-icons-left has-icons-right">
-                <input class="input" type="email" placeholder="" value={user && user.email}/>
-                <span class="icon is-small is-left">
-                  <i class="fa fa-envelope"></i>
+            <section className="field">
+              <label className="label">Email</label>
+              <section className="control has-icons-left has-icons-right">
+                <input className="input" type="email" placeholder="" value={user && user.email}/>
+                <span className="icon is-small is-left">
+                  <i className="fa fa-envelope"></i>
                 </span>
-                <span class="icon is-small is-right">
-                  <i class="fa fa-exclamation-triangle"></i>
+                <span className="icon is-small is-right">
+                  <i className="fa fa-exclamation-triangle"></i>
                 </span>
-              </div>
-              {/* <p class="help is-danger">You cannot change your email.</p> */}
-            </div>
+              </section>
+              {/* <p className="help is-danger">You cannot change your email.</p> */}
+            </section>
 
-            <div class="control">
+            <section className="control">
               {newUsername
-                ? <button class="button is-danger is-pulled-right" onClick={this.updateUsername}>Save changes</button>
-                : <button class="button is-danger is-pulled-right" disabled>Save changes</button>}
-            </div>
+                ? <button className="button is-danger is-pulled-right" onClick={this.updateUsername}>Save changes</button>
+                : <button className="button is-danger is-pulled-right" disabled>Save changes</button>}
+            </section>
+            {/* <button className='button is-text'>Deactivate your account</button> */}
           </section>
         </section>
       </section>
