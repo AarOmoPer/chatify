@@ -100,8 +100,8 @@ class Profile extends React.Component {
 
             <section className="control">
               {newUsername
-                ? <button className="button is-danger is-pulled-right" onClick={this.updateUsername}>Save changes</button>
-                : <button className="button is-danger is-pulled-right" disabled>Save changes</button>}
+                ? <button className="button is-danger is-rounded is-pulled-right" onClick={this.updateUsername}>Save changes</button>
+                : <button className="button is-danger is-rounded is-pulled-right" disabled>Save changes</button>}
             </section>
             {/* <button className='button is-text'>Deactivate your account</button> */}
           </section>

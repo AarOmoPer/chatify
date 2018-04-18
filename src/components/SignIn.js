@@ -14,7 +14,7 @@ class SignIn extends React.Component {
             ? <Redirect to='/private'/>
             : <section>
               <h1 className='title is-size-1'>Chatify</h1>
-              <button className='button is-danger' type='button' onClick={this.handleSignIn}>Sign in</button>
+              <button className='button is-danger is-rounded' type='button' onClick={this.handleSignIn}>Sign in</button>
             </section>}
         </section>
       </section>
