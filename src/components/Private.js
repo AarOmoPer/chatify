@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {auth} from '../firebase'
 import {getUser} from '../firebase/db'
 import {withAuthorization} from './higherOrderComponents'
+import {Link} from 'react-router-dom'
 
 import Contacts from './Contacts'
 import ChatRoom from './ChatRoom'
@@ -24,24 +25,38 @@ class Private extends React.Component {
   render() {
     const {user, view} = this.state;
     return (
-      <section className='hero-body'>
-        <section className='container'>
-          <section className='title'>
-            <p className="control" onClick={auth.doSignOut}>
-              <a className="button is-danger">
-                <span className="icon is-small">
-                  <i className="fa fa-sign-out"></i>
-                </span>
-                <span>Sign out</span>
-              </a>
-            </p>
+      <section className=''>
+        <section className='hero-head'>
+          <header class="navbar">
+            <div class="container">
+              <div class="navbar-end">
+                <a class="navbar-item is-pulled-right">
+                  <p className="control" onClick={auth.doSignOut}>
+                    <a className="button is-danger">
+                      <span className="icon is-small">
+                        <i className="fa fa-sign-out"></i>
+                      </span>
+                      <span>Sign out</span>
+                    </a>
+                  </p>
+                </a>
+              </div>
+            </div>
+          </header>
+        </section>
+
+        <section className='hero-body'>
+          <section className='container'>
+            <section className='title'></section>
+            <Link to='/private/profile'>
+              <h1 className='title'>{user && user.username}</h1>
+            </Link>
+            <p><Contacts/></p>
+            <button className='button is-danger' onClick={this.toggleView}>Toggle</button>
+            {view
+              ? <ChatRoom/>
+              : <Notification/>}
           </section>
-          <h1 className='title'>{user && user.username}</h1>
-          <p><Contacts/></p>
-          <button className='button is-danger' onClick={this.toggleView}>Toggle</button>
-          {view
-            ? <ChatRoom/>
-            : <Notification/>}
         </section>
       </section>
     )

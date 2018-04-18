@@ -22,7 +22,7 @@ export const addContact = (uid, contact_uid) => {
       db
         .ref(`contacts/${uid}`)
         .set([contact_uid])
-    }else{
+    } else {
       const userContacts = Object.values(contacts)
       userContacts.push(contact_uid)
       db
@@ -34,15 +34,13 @@ export const addContact = (uid, contact_uid) => {
 
 export const removeContact = (uid, contact_uid) => {
   getContacts(uid).then(contacts => {
-      const userContacts = Object.values(contacts)
-      const updatedUserContacts = userContacts.filter(contact => contact !== contact_uid)
-      db
-        .ref(`contacts/${uid}`)
-        .set(updatedUserContacts)
-    }
-  )
+    const userContacts = Object.values(contacts)
+    const updatedUserContacts = userContacts.filter(contact => contact !== contact_uid)
+    db
+      .ref(`contacts/${uid}`)
+      .set(updatedUserContacts)
+  })
 }
-
 
 export const getUser = uid => db
   .ref(`users/${uid}`)
@@ -53,3 +51,11 @@ export const getContacts = uid => db
   .ref(`contacts/${uid}`)
   .once('value')
   .then(res => res.val())
+
+export const updateUsername = (uid, new_username) => db
+  .ref(`users/${uid}/username`)
+  .set(new_username)
+
+export const updateUserImage = (uid, new_userImage) => db
+  .ref(`users/${uid}/image`)
+  .set(new_userImage)
