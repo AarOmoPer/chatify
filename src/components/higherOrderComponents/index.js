@@ -3,5 +3,5 @@ import withAuthUser from './withAuthUser';
 
 export {
   withAuthorization,
-  withAuthUser
+  withAuthUser,
 }

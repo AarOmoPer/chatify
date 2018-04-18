@@ -19,7 +19,7 @@ class Private extends React.Component {
     const {authUser} = this.context
     getUser(authUser.uid).then(user => this.setState({user}))
   }
-
+  
   render() {
     const {user, view} = this.state;
     return (
@@ -47,9 +47,10 @@ class Private extends React.Component {
           <section className='container'>
             <section className='title'></section>
             <Link to='/private/profile'>
-              <h1 className='title'>{user && user.username}</h1>
+              <h1 className='title has-text-danger'>{user ? user.username : 'Loading'}</h1>
             </Link>
-            <p><Contacts/></p>
+            <br />
+            <Contacts/>
             <button className='button is-danger' onClick={this.toggleView}>Toggle</button>
             {view
               ? <ChatRoom/>

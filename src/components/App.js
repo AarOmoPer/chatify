@@ -10,6 +10,7 @@ import SignIn from './SignIn'
 import Public from './Public'
 import Private from './Private'
 import Profile from './Profile'
+import People from './People'
 
 
 class App extends React.Component{
@@ -22,6 +23,7 @@ class App extends React.Component{
               <Route exact path='/public' component={Public} />
               <Route exact path='/private' component={Private} />
               <Route exact path='/private/profile' component={Profile} />
+              <Route exact path='/private/people' component={People} />
             </section>
         </BrowserRouter>
       </section>
