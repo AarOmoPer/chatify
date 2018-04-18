@@ -17,9 +17,7 @@ class Private extends React.Component {
 
   componentDidMount() {
     const {authUser} = this.context
-    setTimeout(() => {
-      getUser(authUser.uid).then(user => this.setState({user}))
-    }, 400);
+    getUser(authUser.uid).then(user => this.setState({user}))
   }
 
   render() {
@@ -32,7 +30,7 @@ class Private extends React.Component {
               <div class="navbar-end">
                 <a class="navbar-item is-pulled-right">
                   <p className="control" onClick={auth.doSignOut}>
-                    <a className="button is-danger">
+                    <a className="button is-danger is-rounded">
                       <span className="icon is-small">
                         <i className="fa fa-sign-out"></i>
                       </span>
