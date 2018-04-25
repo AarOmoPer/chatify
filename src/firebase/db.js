@@ -16,6 +16,14 @@ export const createUser = (uid, username, email) => {
     })
 }
 
+export const findContact = (key) => db
+  .ref('users')
+  .orderByChild('email')
+  .startAt(key)
+  .endAt(`${key}\uf8ff`)
+  .once('value')
+  .then(res => res.val())
+
 export const addContact = (uid, contact_uid) => {
   getContacts(uid).then(contacts => {
     if (!contacts) {

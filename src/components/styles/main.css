@@ -18,3 +18,21 @@
   min-height: 40px;
   min-width: 100%;
 }
+
+.personMinImg{
+  min-width: 96px;
+  max-width: 96px;
+  min-height: 96px;
+  max-height: 96px;
+  background-image: url('../../resources/default-user.png');
+  background-size: contain;
+}
+
+.profileImg{
+  min-width: 256px;
+  max-width: 256px;
+  min-height: 256px;
+  max-height: 256px;
+  background-image: url('../../resources/default-user.png');
+  background-size: contain;
+}

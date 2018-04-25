@@ -32,8 +32,8 @@ class Profile extends React.Component {
             <section className='title flex-container'>
               <figure className="image is-256x256 large-picture">
                 <img
-                  className='round-up'
-                  alt='Loading'
+                  className='round-up profileImg'
+                  alt=''
                   src={user && user.image
                   ? user.image
                   : ""}/>
@@ -87,7 +87,7 @@ class Profile extends React.Component {
             <section className="field">
               <label className="label">Email</label>
               <section className="control has-icons-left has-icons-right">
-                <input className="input" type="email" placeholder="" value={user && user.email}/>
+                <input className="input" type="email" placeholder="" value={user ? user.email : ''}/>
                 <span className="icon is-small is-left">
                   <i className="fa fa-envelope"></i>
                 </span>

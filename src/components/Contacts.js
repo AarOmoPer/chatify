@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import {getContacts, addContact, removeContact} from '../firebase/db'
+import {getContacts} from '../firebase/db'
 
 class Contacts extends React.Component{
   state = {
@@ -10,14 +10,15 @@ class Contacts extends React.Component{
 
   componentDidMount(){
     const {authUser} = this.context
-    getContacts(authUser.uid).then(console.log)
+    // getContacts(authUser.uid).then(console.log)
+    getContacts(authUser.uid)
   }
 
   render(){
-    const {contacts} = this.state 
+    // const {contacts} = this.state 
     return(
       <section className=''>
-        <Link to='private/people'><a className=''>Find people</a></Link>
+        <Link to='private/people'><h1 className=''>Find people</h1></Link>
         <br />
         <br />
         {/* <input /> <button>Search</button> */}

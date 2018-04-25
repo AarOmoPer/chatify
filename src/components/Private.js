@@ -25,19 +25,19 @@ class Private extends React.Component {
     return (
       <section className=''>
         <section className='hero-head'>
-          <header class="navbar">
-            <div class="container">
-              <div class="navbar-end">
-                <a class="navbar-item is-pulled-right">
+          <header className="navbar">
+            <div className="container">
+              <div className="navbar-end">
+                <span className="navbar-item is-pulled-right">
                   <p className="control" onClick={auth.doSignOut}>
-                    <a className="button is-danger is-rounded">
+                    <span className="button is-danger is-rounded">
                       <span className="icon is-small">
                         <i className="fa fa-sign-out"></i>
                       </span>
                       <span>Sign out</span>
-                    </a>
+                    </span>
                   </p>
-                </a>
+                </span>
               </div>
             </div>
           </header>
