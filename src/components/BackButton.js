@@ -7,18 +7,18 @@ class BackButton extends React.Component {
     return (
       <section className=''>
         <section className='hero-head'>
-          <header class="navbar">
-            <div class="container">
-              <div class="navbar-brand">
-                <a class="navbar-item">
+          <header className="navbar">
+            <div className="container">
+              <div className="navbar-brand">
+                <span className="navbar-item">
                   <Link to={destination}>
-                    <a class="button round-up is-danger">
-                      <span class="icon">
-                        <i class="fa fa-chevron-circle-left"></i>
+                    <span className="button round-up is-danger">
+                      <span className="icon">
+                        <i className="fa fa-chevron-circle-left"></i>
                       </span>
-                    </a>
+                    </span>
                   </Link>
-                </a>
+                </span>
               </div>
             </div>
           </header>
