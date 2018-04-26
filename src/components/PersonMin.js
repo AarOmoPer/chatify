@@ -17,7 +17,7 @@ class PersonMin extends React.Component {
             <div className="media">
               <div className="media-left">
                 <figure className="image is-96x96">
-                  <img className='round-up personMinImg' src={image} alt=""/>
+                  <img className='round-up small-picture default-user-image' src={image} alt=""/>
                 </figure>
               </div>
               <div className="media-content">

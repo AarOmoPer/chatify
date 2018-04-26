@@ -55,6 +55,9 @@ export const getUser = uid => db
   .once('value')
   .then(res => res.val())
 
+export const getAuthUserData = uid => db
+  .ref(`users/${uid}`)
+
 export const getContacts = uid => db
   .ref(`contacts/${uid}`)
   .once('value')

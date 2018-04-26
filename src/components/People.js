@@ -7,14 +7,14 @@ import {getContacts, findContact} from '../firebase/db'
 
 class People extends React.Component {
   state = {
-    contacts: [],
+    contacts: null,
     searchTerm: '',
     searchResults: {}
   }
 
-  componentWillReceiveProps(lastProps, nextProps) {
-    const {authUser} = nextProps
-    getContacts(authUser.uid).then(contacts => this.setState({contacts}))
+  componentDidMount(props){
+    const {authUser} = this.context
+    getContacts(authUser.uid).then(contacts => this.setState({contacts: contacts || ['']}))
   }
 
   render() {
@@ -24,7 +24,7 @@ class People extends React.Component {
     return (
       <section className=''>
         <BackButton destination='/private'/> {authUser && <section className='hero-body'>
-          <section className='container'>
+          {contacts && <section className='container'>
             <section className='title'>
               <input
                 className='input'
@@ -44,7 +44,7 @@ class People extends React.Component {
                 updateContacts={this.updateContacts}
                 authUserUid={authUser.uid}/>
             })}
-          </section>
+          </section>}
         </section>}
       </section>
     )
