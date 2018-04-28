@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {getUser, updateUsername, updateUserImage} from '../firebase/db'
 import {storeUserImage} from '../firebase/store'
-import {withAuthorization} from './higherOrderComponents';
 
 import BackButton from './BackButton';
 
 class Profile extends React.Component {
   state = {
-    user: null,
+    userData: this.props.userData,
     newUsername: '',
     usernameMessage: {
       text: '',
@@ -17,12 +16,8 @@ class Profile extends React.Component {
     uploadProgress: 0
   }
 
-  componentDidMount() {
-    getUser(this.context.authUser.uid).then(user => this.setState({user}))
-  }
-
   render() {
-    const {user, newUsername, usernameMessage, uploadProgress} = this.state
+    const {userData, newUsername, usernameMessage, uploadProgress} = this.state
     return (
       <section className=''>
         <BackButton destination='/private'/>
@@ -32,10 +27,10 @@ class Profile extends React.Component {
             <section className='title flex-container'>
               <figure className="image is-256x256 large-picture">
                 <img
-                  className='round-up profileImg'
+                  className='round-up large-picture default-user-image'
                   alt=''
-                  src={user && user.image
-                  ? user.image
+                  src={userData && userData.image
+                  ? userData.image
                   : ""}/>
               </figure>
             </section>
@@ -71,7 +66,7 @@ class Profile extends React.Component {
                 <input
                   className="input"
                   type="text"
-                  placeholder={user && user.username}
+                  placeholder={userData && userData.username}
                   value={newUsername}
                   onChange={this.appendToUsername}/>
                 <span className="icon is-small is-left">
@@ -87,7 +82,7 @@ class Profile extends React.Component {
             <section className="field">
               <label className="label">Email</label>
               <section className="control has-icons-left has-icons-right">
-                <input className="input" type="email" placeholder="" value={user ? user.email : ''}/>
+                <input className="input" type="email" placeholder="" value={userData ? userData.email : ''}/>
                 <span className="icon is-small is-left">
                   <i className="fa fa-envelope"></i>
                 </span>
@@ -114,7 +109,7 @@ class Profile extends React.Component {
 
   updateUsername = () => updateUsername(this.context.authUser.uid, this.state.newUsername).then(() => {
     this.setState({newUsername: ''});
-    getUser(this.context.authUser.uid).then(user => this.setState({user}))
+    getUser(this.context.authUser.uid).then(userData => this.setState({userData}))
   })
 
   updateUserImage = e => {
@@ -124,7 +119,7 @@ class Profile extends React.Component {
         uploadProgress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100
       });
     }, error => {}, () => {
-      updateUserImage(this.context.authUser.uid, uploadTask.snapshot.downloadURL).then(() => getUser(this.context.authUser.uid).then(user => this.setState({user, uploadProgress: 0})))
+      updateUserImage(this.context.authUser.uid, uploadTask.snapshot.downloadURL).then(() => getUser(this.context.authUser.uid).then(userData => this.setState({userData, uploadProgress: 0})))
     });
 
   }
@@ -134,5 +129,4 @@ Profile.contextTypes = {
   authUser: PropTypes.object
 }
 
-const authCondition = (authUser) => !!authUser;
-export default withAuthorization(authCondition)(Profile);
+export default Profile;

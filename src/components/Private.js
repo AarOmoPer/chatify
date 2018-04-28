@@ -1,69 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {auth} from '../firebase'
-import {getUser} from '../firebase/db'
+import {getAuthUserData} from '../firebase/db'
 import {withAuthorization} from './higherOrderComponents'
-import {Link} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 
-import Contacts from './Contacts'
-import ChatRoom from './ChatRoom'
-import Notification from './Notification'
+import Home from './Home'
+import Profile from './Profile'
+import People from './People'
+import Person from './Person'
 
 class Private extends React.Component {
   state = {
-    user: null,
-    view: true
+    userData: null,
   }
 
   componentDidMount() {
     const {authUser} = this.context
-    getUser(authUser.uid).then(user => this.setState({user}))
+    getAuthUserData(authUser.uid).on('value', res => {
+      const userData = res.val();
+      this.setState({userData})
+    })
   }
   
   render() {
-    const {user, view} = this.state;
+    const {userData} = this.state;
     return (
       <section className=''>
-        <section className='hero-head'>
-          <header className="navbar">
-            <div className="container">
-              <div className="navbar-end">
-                <span className="navbar-item is-pulled-right">
-                  <p className="control" onClick={auth.doSignOut}>
-                    <span className="button is-danger is-rounded">
-                      <span className="icon is-small">
-                        <i className="fa fa-sign-out"></i>
-                      </span>
-                      <span>Sign out</span>
-                    </span>
-                  </p>
-                </span>
-              </div>
-            </div>
-          </header>
-        </section>
-
-        <section className='hero-body'>
-          <section className='container'>
-            <section className='title'></section>
-            <Link to='/private/profile'>
-              <h1 className='title has-text-danger'>{user ? user.username : 'Loading'}</h1>
-            </Link>
-            <br />
-            <Contacts/>
-            <button className='button is-danger' onClick={this.toggleView}>Toggle</button>
-            {view
-              ? <ChatRoom/>
-              : <Notification/>}
-          </section>
-        </section>
+        <Route exact path='/private' render={() => userData && <Home userData={userData} />}/>
+        <Route exact path='/private/profile' render={() => userData && <Profile userData={userData} />}/>
+        <Route path='/private/contact/' render={() => <Person userData={userData} />}/>
+        <Route exact path='/private/people' component={People} />
       </section>
     )
   }
-
-  toggleView = () => this.setState({
-    view: !this.state.view
-  })
 }
 
 Private.contextTypes = {

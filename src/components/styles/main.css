@@ -7,6 +7,14 @@
   border-radius: 1000em;
 }
 
+.medium-margin-right{
+  margin-right: 25px; 
+}
+
+.is-red{
+  background-color: indianred;
+}
+
 .large-picture{
   min-width: 256px;
   max-width: 256px;
@@ -14,25 +22,34 @@
   max-height: 256px;
 }
 
+.medium-picture{
+  min-width: 128px;
+  max-width: 128px;
+  min-height: 128px;
+  max-height: 128px;
+}
+
+.small-picture{
+  min-width: 96px;
+  max-width: 96px;
+  min-height: 96px;
+  max-height: 96px;
+}
+
 .medium-space{
   min-height: 40px;
   min-width: 100%;
 }
 
-.personMinImg{
-  min-width: 96px;
-  max-width: 96px;
-  min-height: 96px;
-  max-height: 96px;
+.default-user-image{
   background-image: url('../../resources/default-user.png');
   background-size: contain;
 }
 
-.profileImg{
-  min-width: 256px;
-  max-width: 256px;
-  min-height: 256px;
-  max-height: 256px;
-  background-image: url('../../resources/default-user.png');
-  background-size: contain;
+.contacts-rack{
+  display: flex;
+  max-width: 90vw;
+  min-height: 180px;
+  max-height: 180px;
+  overflow: scroll;
 }

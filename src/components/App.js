@@ -9,9 +9,6 @@ import './styles/main.css'
 import SignIn from './SignIn'
 import Public from './Public'
 import Private from './Private'
-import Profile from './Profile'
-import People from './People'
-
 
 class App extends React.Component{
   render(){
@@ -21,9 +18,7 @@ class App extends React.Component{
             <section className='hero is-fullheight'>
               <Route exact path='/' component={SignIn} />
               <Route exact path='/public' component={Public} />
-              <Route exact path='/private' component={Private} />
-              <Route exact path='/private/profile' component={Profile} />
-              <Route exact path='/private/people' component={People} />
+              <Route path='/private' component={Private} />
             </section>
         </BrowserRouter>
       </section>
