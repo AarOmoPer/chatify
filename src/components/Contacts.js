@@ -8,12 +8,16 @@ import './styles/contacts.css'
 
 class Contacts extends React.Component{
   state = {
-    contacts: null
+    contacts: null,
+    contactsUid: null
   }
 
   componentDidMount(){
     const {authUser} = this.context
-    getContacts(authUser.uid).then(contactsUid => contactsUid && Promise.all(contactsUid.map(contact => getUser(contact)))).then(contacts => this.setState({contacts}))
+    getContacts(authUser.uid).then(contactsUid => {
+      this.setState({contactsUid})
+      contactsUid && Promise.all(contactsUid.map(contact => getUser(contact))).then(contacts => this.setState({contacts}))
+    })
   }
   
   render(){
@@ -21,15 +25,11 @@ class Contacts extends React.Component{
     return(
       <section className=''>
         <section className='contacts-rack'>
-          {contacts && contacts.map(contact => <PersonIcon {...contact}/>)}
+          {contacts && contacts.map((contact, ind) => <Link to={`private/contact/${this.state.contactsUid[ind]}`}><PersonIcon {...contact}/></Link>)}
         </section>
         <Link to='private/people'><h1 className=''>Find people</h1></Link>
         <br />
         <br />
-        {/* <input /> <button>Search</button> */}
-        {/* <ul>
-          
-        </ul> */}
       </section>
     )
   }

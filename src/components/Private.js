@@ -7,6 +7,7 @@ import {Route} from 'react-router-dom'
 import Home from './Home'
 import Profile from './Profile'
 import People from './People'
+import Person from './Person'
 
 class Private extends React.Component {
   state = {
@@ -27,6 +28,7 @@ class Private extends React.Component {
       <section className=''>
         <Route exact path='/private' render={() => userData && <Home userData={userData} />}/>
         <Route exact path='/private/profile' render={() => userData && <Profile userData={userData} />}/>
+        <Route path='/private/contact/' render={() => <Person userData={userData} />}/>
         <Route exact path='/private/people' component={People} />
       </section>
     )
