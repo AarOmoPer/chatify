@@ -7,7 +7,6 @@ import {BackButton} from './navButtons'
 
 class Profile extends React.Component {
   state = {
-    userData: this.context.userDetails,
     newUsername: '',
     uploadProgress: 0
   }
@@ -111,24 +110,27 @@ class Profile extends React.Component {
 
   appendToUsername = event => this.setState({newUsername: event.target.value})
 
-  updateUsername = () => users.updateUsername(this.context.authUser.uid, this.state.newUsername).then(() => this.setState({newUsername: ''}))
+  updateUsername = () => users
+    .updateUsername(this.context.authUser.uid, this.state.newUsername)
+    .then(() => this.setState({newUsername: ''}))
 
   updateUserImage = e => {
-    // const uploadTask = storeUserImage(this.context.authUser.uid, e.target.files[0])
-    // uploadTask.on('state_changed', snapshot => {
-    //   this.setState({
-    //     uploadProgress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-    //   });
-    // }, error => {}, () => {
-    //   updateUserImage(this.context.authUser.uid, uploadTask.snapshot.downloadURL).then(() => getUser(this.context.authUser.uid).then(userData => this.setState({userData, uploadProgress: 0})))
-    // });
-
+    const uploadTask = storeUserImage(this.context.authUser.uid, e.target.files[0])
+    uploadTask.on('state_changed', snapshot => {
+      this.setState({
+        uploadProgress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      });
+    }, error => {}, () => {
+      users
+        .updateUserImage(this.context.authUser.uid, uploadTask.snapshot.downloadURL)
+        .then(() => this.setState({uploadProgress: 0}))
+    });
   }
 }
 
 Profile.contextTypes = {
   authUser: PropTypes.object,
-  userDetails: PropTypes.object,
+  userDetails: PropTypes.object
 }
 
 export default Profile;

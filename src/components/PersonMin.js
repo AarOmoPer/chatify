@@ -1,16 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom'
 
 class PersonMin extends React.Component {
   render() {
-    const {
-      username,
-      email,
-      image,
-      canAdd,
-      canRemove,
-    } = this.props
+    const {userUid, userData} = this.props
+    const {username, email, image} = userData
+    const {authUser} = this.context
     return (
-      <section className='title'>
+      <Link to={`/private/contact/${userUid}`} className='title'>
         <div className="card">
           <div className="card-content">
             <div className="media">
@@ -22,17 +20,28 @@ class PersonMin extends React.Component {
               <div className="media-content">
                 <p className="title is-5">{username}</p>
                 <p className="subtitle is-7">{email}</p>
-                {(canAdd && !canRemove) && <button
+
+                {/* {(isStranger && isNotMe) && <button
                   className='button is-rounded is-danger is-pulled-right'
                   onClick={() => null}>Add</button>}
-                {canRemove && <button
-                  className='button is-rounded is-danger is-pulled-right'
-                  onClick={() => null}>Remove</button>}
+
+                {isRequest && <section className='field is-grouped is-pulled-right'>
+                  <p className='control'>
+                    <button
+                      className='button is-rounded is-danger'
+                      onClick={() => null}>Accept</button>
+                  </p>
+                  <p className='control'>
+                    <button
+                      className='button is-rounded is-danger'
+                      onClick={() => null}>Decline</button>
+                  </p>
+                </section>} */}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </Link>
     )
   }
 

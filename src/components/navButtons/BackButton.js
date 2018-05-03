@@ -7,7 +7,7 @@ class BackButton extends React.Component {
     return (
       <section className=''>
         <section className='hero-head'>
-          <header className="navbar">
+          <header className="navbar is-fixed-top">
             <div className="container">
               <div className="navbar-brand">
                 <span className="navbar-item">
