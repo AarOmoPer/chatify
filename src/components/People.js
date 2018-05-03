@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {BackButton} from './navButtons'
 
 import PersonMin from './PersonMin'
-import {getContacts, findContact} from '../firebase/db'
+import {users} from '../firebase/db'
 
 class People extends React.Component {
   state = {
@@ -14,7 +14,7 @@ class People extends React.Component {
 
   componentDidMount(props){
     const {authUser} = this.context
-    getContacts(authUser.uid).then(contacts => this.setState({contacts: contacts || ['']}))
+    users.getContacts(authUser.uid).then(contacts => this.setState({contacts: contacts || ['']}))
   }
 
   render() {
@@ -54,15 +54,15 @@ class People extends React.Component {
     const searchTerm = event.target.value
     this.setState({searchTerm})
     searchTerm
-      ? findContact(searchTerm).then(users => this.setState({
+      ? users.findContact(searchTerm).then(users => this.setState({
         searchResults: users || {}
       }))
       : this.setState({searchResults: {}})
   }
 
   updateContacts = () => {
-    const {authUser} = this.context
-    setTimeout(() => getContacts(authUser.uid).then(contacts => this.setState({contacts})), 400)
+    // const {authUser} = this.context
+    // setTimeout(() => getContacts(authUser.uid).then(contacts => this.setState({contacts})), 400)
   }
 }
 

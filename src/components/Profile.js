@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getUser, updateUsername, updateUserImage} from '../firebase/db'
+import {users} from '../firebase/db'
 import {storeUserImage} from '../firebase/store'
 
 import {BackButton} from './navButtons'
 
 class Profile extends React.Component {
   state = {
-    userData: this.props.userData,
+    userData: this.context.userDetails,
     newUsername: '',
     uploadProgress: 0
   }
 
   render() {
-    const {userData, newUsername, uploadProgress} = this.state
+    const {newUsername, uploadProgress} = this.state
+    const userData = this.context.userDetails
     return (
       <section className=''>
         <BackButton destination='/private'/>
@@ -110,23 +111,24 @@ class Profile extends React.Component {
 
   appendToUsername = event => this.setState({newUsername: event.target.value})
 
-  updateUsername = () => updateUsername(this.context.authUser.uid, this.state.newUsername).then(() => this.setState({newUsername: ''}))
+  updateUsername = () => users.updateUsername(this.context.authUser.uid, this.state.newUsername).then(() => this.setState({newUsername: ''}))
 
   updateUserImage = e => {
-    const uploadTask = storeUserImage(this.context.authUser.uid, e.target.files[0])
-    uploadTask.on('state_changed', snapshot => {
-      this.setState({
-        uploadProgress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-      });
-    }, error => {}, () => {
-      updateUserImage(this.context.authUser.uid, uploadTask.snapshot.downloadURL).then(() => getUser(this.context.authUser.uid).then(userData => this.setState({userData, uploadProgress: 0})))
-    });
+    // const uploadTask = storeUserImage(this.context.authUser.uid, e.target.files[0])
+    // uploadTask.on('state_changed', snapshot => {
+    //   this.setState({
+    //     uploadProgress: (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+    //   });
+    // }, error => {}, () => {
+    //   updateUserImage(this.context.authUser.uid, uploadTask.snapshot.downloadURL).then(() => getUser(this.context.authUser.uid).then(userData => this.setState({userData, uploadProgress: 0})))
+    // });
 
   }
 }
 
 Profile.contextTypes = {
-  authUser: PropTypes.object
+  authUser: PropTypes.object,
+  userDetails: PropTypes.object,
 }
 
 export default Profile;

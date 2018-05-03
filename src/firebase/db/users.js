@@ -1,9 +1,10 @@
 import {db} from '../firebase';
 
 // --- Create
-export const createUser = (uid, username, email) => db
+export const createUser = (uid, username, email, image) => db
   .ref(`users/${uid}`)
-  .set({username, email})
+  .once('value')
+  .then(res => !res.val() && db.ref(`users/${uid}`).set({username, email, image}))
 
 // --- Read
 export const getUserOnce = uid => db

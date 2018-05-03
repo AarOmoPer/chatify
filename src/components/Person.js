@@ -1,6 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom'
-import {getUser} from '../firebase/db'
+import {users} from '../firebase/db'
 
 import {BackButton} from './navButtons'
 
@@ -12,7 +12,7 @@ class Person extends React.Component {
 
   componentDidMount(){
     const contactUid = this.props.location.pathname.split('/private/contact/')[1];
-    getUser(contactUid).then(userData => this.setState({userData}))
+    users.getUser(contactUid).then(userData => this.setState({userData}))
   }
 
   render() {

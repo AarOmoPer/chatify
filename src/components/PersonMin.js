@@ -1,5 +1,4 @@
 import React from 'react';
-import {addContact, removeContact} from '../firebase/db'
 
 class PersonMin extends React.Component {
   render() {
@@ -25,10 +24,10 @@ class PersonMin extends React.Component {
                 <p className="subtitle is-7">{email}</p>
                 {(canAdd && !canRemove) && <button
                   className='button is-rounded is-danger is-pulled-right'
-                  onClick={this.addContact}>Add</button>}
+                  onClick={() => null}>Add</button>}
                 {canRemove && <button
                   className='button is-rounded is-danger is-pulled-right'
-                  onClick={this.removeContact}>Remove</button>}
+                  onClick={() => null}>Remove</button>}
               </div>
             </div>
           </div>
@@ -37,17 +36,5 @@ class PersonMin extends React.Component {
     )
   }
 
-  addContact = () => {
-    const {authUserUid, userUid, updateContacts} = this.props;
-    addContact(authUserUid, userUid);
-    updateContacts()
-  }
-
-  removeContact = () => {
-    const {authUserUid, userUid, updateContacts} = this.props;
-    removeContact(authUserUid, userUid);
-    updateContacts()
-  }
 }
-
 export default PersonMin

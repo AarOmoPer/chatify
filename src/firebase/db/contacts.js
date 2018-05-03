@@ -1,4 +1,5 @@
-import {db} from './firebase';
+import {db} from '../firebase';
+import {users} from './'
 
 // Create
 export const addContact = (uid, contact_uid) => {
@@ -26,13 +27,20 @@ export const findContact = (key) => db
   .once('value')
   .then(res => res.val())
 
+//-untested
 export const getContactsOnce = uid => db
   .ref(`contacts/${uid}`)
   .once('value')
-  .then(res => res.val())
+  .then(res => Object.values(res.val()))
+  .then(rawContacts => Promise.all(rawContacts.map(contact => users.getUserOnce(contact.contactUid).then(userDetails => Object.assign(userDetails, contact)))))
 export const getContacts = (uid, callBack) => db
   .ref(`contacts/${uid}`)
-  .on('value', res => callBack(res.val()))
+  .on('value', res => {
+    const rawContacts = Object.values(res.val());
+    Promise
+      .all(rawContacts.map(contact => users.getUserOnce(contact.contactUid).then(userDetails => Object.assign(userDetails, contact))))
+      .then(refinedContacts => callBack(refinedContacts))
+  })
 
 // Update Delete
 export const removeContact = (uid, contact_uid) => {
