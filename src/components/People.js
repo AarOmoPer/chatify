@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import BackButton from './BackButton'
+import {BackButton} from './navButtons'
 
 import PersonMin from './PersonMin'
 import {getContacts, findContact} from '../firebase/db'

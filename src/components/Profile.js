@@ -3,25 +3,20 @@ import PropTypes from 'prop-types';
 import {getUser, updateUsername, updateUserImage} from '../firebase/db'
 import {storeUserImage} from '../firebase/store'
 
-import BackButton from './BackButton';
+import {BackButton} from './navButtons'
 
 class Profile extends React.Component {
   state = {
     userData: this.props.userData,
     newUsername: '',
-    usernameMessage: {
-      text: '',
-      colour: ''
-    },
     uploadProgress: 0
   }
 
   render() {
-    const {userData, newUsername, usernameMessage, uploadProgress} = this.state
+    const {userData, newUsername, uploadProgress} = this.state
     return (
       <section className=''>
         <BackButton destination='/private'/>
-
         <section className='hero-body'>
           <section className='container'>
             <section className='title flex-container'>
@@ -34,7 +29,7 @@ class Profile extends React.Component {
                   : ""}/>
               </figure>
             </section>
-            
+
             <section className='medium-space'>
               {uploadProgress > 0 && <progress className="progress is-danger" value={uploadProgress} max="100"/>}
             </section>
@@ -51,14 +46,14 @@ class Profile extends React.Component {
                     <i className="fa fa-upload"></i>
                   </span>
                   <span className="file-label">
-                    Change profile photo 
+                    Change profile photo
                   </span>
                 </span>
               </label>
             </section>
-            
-            <br />
-            <br />
+
+            <br/>
+            <br/>
 
             <section className="field">
               <label className="label">Username</label>
@@ -76,13 +71,20 @@ class Profile extends React.Component {
                   <i className="fa fa-check"></i>
                 </span>
               </section>
-              <p className={`help is-${usernameMessage.colour}`}>{usernameMessage.text}</p>
+              {/* <p className={`help is-${usernameMessage.colour}`}>{usernameMessage.text}</p> */}
             </section>
 
             <section className="field">
               <label className="label">Email</label>
               <section className="control has-icons-left has-icons-right">
-                <input className="input" type="email" placeholder="" value={userData ? userData.email : ''}/>
+                <input
+                  className="input"
+                  type="email"
+                  value={userData
+                  ? userData.email
+                  : ''}
+                  placeholder=''
+                  disabled/>
                 <span className="icon is-small is-left">
                   <i className="fa fa-envelope"></i>
                 </span>
@@ -90,15 +92,16 @@ class Profile extends React.Component {
                   <i className="fa fa-exclamation-triangle"></i>
                 </span>
               </section>
-              {/* <p className="help is-danger">You cannot change your email.</p> */}
+              <p className="help is-danger">You cannot change your email.</p>
             </section>
 
             <section className="control">
               {newUsername
-                ? <button className="button is-danger is-rounded is-pulled-right" onClick={this.updateUsername}>Save changes</button>
+                ? <button
+                    className="button is-danger is-rounded is-pulled-right"
+                    onClick={this.updateUsername}>Save changes</button>
                 : <button className="button is-danger is-rounded is-pulled-right" disabled>Save changes</button>}
             </section>
-            {/* <button className='button is-text'>Deactivate your account</button> */}
           </section>
         </section>
       </section>
@@ -107,10 +110,7 @@ class Profile extends React.Component {
 
   appendToUsername = event => this.setState({newUsername: event.target.value})
 
-  updateUsername = () => updateUsername(this.context.authUser.uid, this.state.newUsername).then(() => {
-    this.setState({newUsername: ''});
-    getUser(this.context.authUser.uid).then(userData => this.setState({userData}))
-  })
+  updateUsername = () => updateUsername(this.context.authUser.uid, this.state.newUsername).then(() => this.setState({newUsername: ''}))
 
   updateUserImage = e => {
     const uploadTask = storeUserImage(this.context.authUser.uid, e.target.files[0])

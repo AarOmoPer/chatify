@@ -1,13 +1,13 @@
 import React from 'react';
 
-class ChatRoom extends React.Component{
+class Conversation extends React.Component{
   render(){
     return(
       <section>
-        ChatRoom
+        Conversation
       </section>
     )
   }
 }
 
-export default ChatRoom;
+export default Conversation;

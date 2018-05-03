@@ -11,7 +11,7 @@ class BackButton extends React.Component {
             <div className="container">
               <div className="navbar-brand">
                 <span className="navbar-item">
-                  <Link to={destination}>
+                  <Link to={destination || '../'}>
                     <span className="button round-up is-danger">
                       <span className="icon">
                         <i className="fa fa-chevron-circle-left"></i>

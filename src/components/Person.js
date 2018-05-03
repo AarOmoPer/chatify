@@ -2,7 +2,8 @@ import React from 'react';
 import {withRouter} from 'react-router-dom'
 import {getUser} from '../firebase/db'
 
-import BackButton from './BackButton'
+import {BackButton} from './navButtons'
+
 
 class Person extends React.Component {
   state = {
