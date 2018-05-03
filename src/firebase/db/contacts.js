@@ -32,11 +32,15 @@ export const getContactsOnce = uid => db
   .ref(`contacts/${uid}`)
   .once('value')
   .then(res => Object.values(res.val()))
-  .then(rawContacts => Promise.all(rawContacts.map(contact => users.getUserOnce(contact.contactUid).then(userDetails => Object.assign(userDetails, contact)))))
+  .then(rawContacts => rawContacts
+    ? Promise.all(rawContacts.map(contact => users.getUserOnce(contact.contactUid).then(userDetails => Object.assign(userDetails, contact))))
+    : [])
 export const getContacts = (uid, callBack) => db
   .ref(`contacts/${uid}`)
   .on('value', res => {
-    const rawContacts = Object.values(res.val());
+    const rawContacts = rawContacts
+      ? Object.values(res.val())
+      : [];
     Promise
       .all(rawContacts.map(contact => users.getUserOnce(contact.contactUid).then(userDetails => Object.assign(userDetails, contact))))
       .then(refinedContacts => callBack(refinedContacts))
