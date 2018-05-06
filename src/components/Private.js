@@ -6,6 +6,7 @@ import Home from './Home'
 import Profile from './Profile'
 import People from './People'
 import Person from './Person'
+import Requests from './Requests'
 
 class Private extends React.Component {
   render() {
@@ -13,8 +14,9 @@ class Private extends React.Component {
       <section className=''>
         <Route exact path='/private' component={Home} />
         <Route exact path='/private/profile' component={Profile} />
-        <Route path='/private/contact/' component={Person} />
         <Route exact path='/private/people' component={People} />
+        <Route exact path='/private/requests' component={Requests} />
+        <Route path='/private/contact/' component={Person} />
       </section>
     )
   }

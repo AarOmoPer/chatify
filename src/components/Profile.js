@@ -8,11 +8,12 @@ import {BackButton} from './navButtons'
 class Profile extends React.Component {
   state = {
     newUsername: '',
-    uploadProgress: 0
+    uploadProgress: 0,
+    imageModal: false
   }
 
   render() {
-    const {newUsername, uploadProgress} = this.state
+    const {newUsername, uploadProgress, imageModal} = this.state
     const userData = this.context.userDetails
     return (
       <section className=''>
@@ -23,12 +24,32 @@ class Profile extends React.Component {
               <figure className="image is-256x256 large-picture">
                 <img
                   className='round-up large-picture default-user-image'
+                  onClick={this.openImageModal}
                   alt=''
                   src={userData && userData.image
                   ? userData.image
                   : ""}/>
               </figure>
             </section>
+
+            <div className={`modal ${imageModal && 'is-active'}`}>
+              <div className="modal-background"></div>
+              <div className="modal-content">
+                <p className="image is-1by1">
+                  <img
+                    src={userData && userData.image
+                    ? userData.image
+                    : ""}
+                    className='round-up default-user-image'
+                    alt=""/>
+                </p>
+              </div>
+              
+              <button
+                className="modal-close is-large"
+                aria-label="close"
+                onClick={this.closeImageModal}></button>
+            </div>
 
             <section className='medium-space'>
               {uploadProgress > 0 && <progress className="progress is-danger" value={uploadProgress} max="100"/>}
@@ -126,6 +147,9 @@ class Profile extends React.Component {
         .then(() => this.setState({uploadProgress: 0}))
     });
   }
+
+  openImageModal = () => this.setState({imageModal: true})
+  closeImageModal = () => this.setState({imageModal: false})
 }
 
 Profile.contextTypes = {

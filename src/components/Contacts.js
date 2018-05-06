@@ -22,7 +22,7 @@ class Contacts extends React.Component {
 }
 
 Contacts.contextTypes = {
-  userContacts: PropTypes.objects
+  userContacts: PropTypes.object
 }
 
 export default Contacts;

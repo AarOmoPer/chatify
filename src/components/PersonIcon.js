@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 class PersonIcon extends React.Component {
   render() {
-    const {username, image, contactUid, conversationUid} = this.props
+    const {username, image, conversationUid} = this.props
     return (
       <Link
         to={`private/conversation/${conversationUid}`}

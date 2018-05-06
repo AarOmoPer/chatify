@@ -1,21 +1,60 @@
 import {db} from '../firebase';
-import {users} from './'
+import {users, conversations} from './'
 
 // Create
-export const addContact = (uid, contact_uid) => {
-  getContacts(uid).then(contacts => {
-    if (!contacts) {
-      db
-        .ref(`contacts/${uid}`)
-        .set([contact_uid])
-    } else {
-      const userContacts = Object.values(contacts)
-      userContacts.push(contact_uid)
-      db
-        .ref(`contacts/${uid}`)
-        .set(userContacts)
-    }
-  })
+export const acceptContactRequest = (uid, senderUid) => {
+  const conversationKey = conversations.createPrivateConversation(uid, senderUid);
+  db
+    .ref(`contacts/${uid}`)
+    .push({contactUid: senderUid, conversationUid: conversationKey})
+  db
+    .ref(`contacts/${senderUid}`)
+    .push({contactUid: uid, conversationUid: conversationKey})
+
+  deleteContactRequestFromRecipient(uid, senderUid)
+}
+
+export const deleteContactRequestFromRecipient = (uid, senderUid) => {
+  db
+    .ref(`requests/${uid}/received`)
+    .orderByChild('sender')
+    .equalTo(senderUid)
+    .once('value')
+    .then(res => Object.keys(res.val())[0])
+    .then(key => db.ref(`requests/${uid}/received/${key}`).remove())
+  db
+    .ref(`requests/${senderUid}/pending`)
+    .orderByChild('target')
+    .equalTo(uid)
+    .once('value')
+    .then(res => Object.keys(res.val())[0])
+    .then(key => db.ref(`requests/${senderUid}/pending/${key}`).remove())
+}
+
+export const deleteContactRequestFromSender = (uid, targetUid) => {
+  db
+    .ref(`requests/${uid}/pending`)
+    .orderByChild('target')
+    .equalTo(targetUid)
+    .once('value')
+    .then(res => Object.keys(res.val())[0])
+    .then(key => db.ref(`requests/${uid}/pending/${key}`).remove())
+  db
+    .ref(`requests/${targetUid}/received`)
+    .orderByChild('sender')
+    .equalTo(uid)
+    .once('value')
+    .then(res => Object.keys(res.val())[0])
+    .then(key => db.ref(`requests/${targetUid}/received/${key}`).remove())
+}
+
+export const sendContactRequest = (uid, targetUid) => {
+  db
+    .ref(`requests/${targetUid}/received`)
+    .push({sender: uid})
+  db
+    .ref(`requests/${uid}/pending`)
+    .push({target: targetUid})
 }
 
 // Read
@@ -27,7 +66,6 @@ export const findContact = (key) => db
   .once('value')
   .then(res => res.val())
 
-//-untested
 export const getContactsOnce = uid => db
   .ref(`contacts/${uid}`)
   .once('value')
@@ -35,10 +73,11 @@ export const getContactsOnce = uid => db
   .then(rawContacts => rawContacts
     ? Promise.all(rawContacts.map(contact => users.getUserOnce(contact.contactUid).then(userDetails => Object.assign(userDetails, contact))))
     : [])
+
 export const getContacts = (uid, callBack) => db
   .ref(`contacts/${uid}`)
   .on('value', res => {
-    const rawContacts = rawContacts
+    const rawContacts = res.val()
       ? Object.values(res.val())
       : [];
     Promise
@@ -46,13 +85,39 @@ export const getContacts = (uid, callBack) => db
       .then(refinedContacts => callBack(refinedContacts))
   })
 
-// Update Delete
-export const removeContact = (uid, contact_uid) => {
-  getContacts(uid).then(contacts => {
-    const userContacts = Object.values(contacts)
-    const updatedUserContacts = userContacts.filter(contact => contact !== contact_uid)
-    db
-      .ref(`contacts/${uid}`)
-      .set(updatedUserContacts)
+export const getContactRequests = (uid, callBack) => db
+  .ref(`requests/${uid}`)
+  .on('value', res => {
+    const contactRequests = res.val();
+    const pending = contactRequests.pending
+      ? Promise.all(Object.values(contactRequests.pending).map(request => users.getUserOnce(request.target).then(userDetails => Object.assign(userDetails, request))))
+      : null;
+    const received = contactRequests.received
+      ? Promise.all(Object.values(contactRequests.received).map(request => users.getUserOnce(request.sender).then(userDetails => Object.assign(userDetails, request))))
+      : null;
+    Promise
+      .all([pending, received])
+      .then(res => callBack({pending: res[0], received: res[1]}))
   })
+
+// Delete
+
+export const removeContact = (uid, contactUid, conversationUid) => {
+  db
+    .ref(`contacts/${uid}`)
+    .orderByChild('contactUid')
+    .equalTo(contactUid)
+    .once('value')
+    .then(res => Object.keys(res.val())[0])
+    .then(key => db.ref(`contacts/${uid}/${key}`).remove())
+  db
+    .ref(`contacts/${contactUid}`)
+    .orderByChild('contactUid')
+    .equalTo(uid)
+    .once('value')
+    .then(res => Object.keys(res.val())[0])
+    .then(key => db.ref(`contacts/${contactUid}/${key}`).remove())
+  db
+    .ref(`conversations/${conversationUid}`)
+    .remove()
 }

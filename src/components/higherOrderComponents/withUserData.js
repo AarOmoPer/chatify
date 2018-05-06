@@ -8,16 +8,18 @@ const withUserData = (Component) => {
   class withUserData extends React.Component {
     state = {
       userDetails: null,
-      userContacts: null
+      userContacts: null,
+      userContactRequests: null,
     };
 
     getChildContext() {
-      return {userDetails: this.state.userDetails, userContacts: this.state.userContacts};
+      return {...this.state};
     }
 
     getData(authUserUid) {
       users.getUser(authUserUid, userDetails => this.setState({userDetails}))
       contacts.getContacts(authUserUid, userContacts => this.setState({userContacts}))
+      contacts.getContactRequests(authUserUid, userContactRequests => this.setState({userContactRequests}))
     }
 
     resetData() {
@@ -41,8 +43,10 @@ const withUserData = (Component) => {
 
   withUserData.childContextTypes = {
     userDetails: PropTypes.object,
-    userContacts: PropTypes.object
+    userContacts: PropTypes.object,
+    userContactRequests: PropTypes.object
   };
+
   withUserData.contextTypes = {
     authUser: PropTypes.object
   };

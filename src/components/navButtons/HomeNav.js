@@ -8,31 +8,29 @@ class HomeNav extends React.Component {
     menuView: false
   }
   render() {
-    const {userDetails, contactRequests} = this.context;
+    const {userDetails, userContactRequests} = this.context;
     const {menuView} = this.state
-    const requestCount = contactRequests
-      ? Object
-        .keys(contactRequests)
-        .length
+    const requestCount = (userContactRequests && userContactRequests.received)
+      ? userContactRequests.received.length
       : 0
     return (
       <section className='hero-head'>
-        <nav class="navbar is-fixed-top">
+        <nav className="navbar is-fixed-top">
           <section className='container is-plain-white'>
-            <div class="navbar-brand">
-              <Link class="navbar-item" to='/private/profile'>
+            <div className="navbar-brand">
+              <Link className="navbar-item" to='/private/profile'>
                 <h1 className='title is-4 has-text-danger'>{userDetails && userDetails
                     .username
                     .split(' ')[0]}</h1>
               </Link>
-              {!!requestCount && <h1 class="navbar-item">
-                <h2 class='subtitle'>
+              {!!requestCount && <Link className="navbar-item" to={'/private/requests'}>
+                <h2 className='subtitle'>
                   <i className="fa fa-user-circle"></i>
                   <sub className='has-text-danger is-size-6'>{requestCount}</sub>
                 </h2>
-              </h1>}
+              </Link>}
               <div
-                class="navbar-burger burger"
+                className="navbar-burger burger"
                 onClick={this.toggleMenu}
                 data-target="navbarExampleTransparentExample">
                 <span></span>
@@ -41,10 +39,10 @@ class HomeNav extends React.Component {
               </div>
             </div>
 
-            <div class={`navbar-menu ${menuView && 'is-active'}`}>
-              <div class="navbar-end">
-                <div class="navbar-item">
-                  <div class="field is-grouped">
+            <div className={`navbar-menu ${menuView && 'is-active'}`}>
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="field is-grouped">
                     <p className="control" onClick={auth.doSignOut}>
                       <span className="button is-danger is-rounded">
                         <span className="icon is-small">
@@ -69,7 +67,8 @@ class HomeNav extends React.Component {
 }
 
 HomeNav.contextTypes = {
-  userDetails: PropTypes.object
+  userDetails: PropTypes.object,
+  userContactRequests: PropTypes.object
 }
 
 export default HomeNav
