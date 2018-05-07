@@ -23,10 +23,10 @@ class HomeNav extends React.Component {
                     .username
                     .split(' ')[0]}</h1>
               </Link>
-              {!!requestCount && <Link className="navbar-item" to={'/private/requests'}>
-                <h2 className='subtitle'>
+              {userDetails && <Link className="navbar-item" to={'/private/requests'}>
+                <h2 className='title is-4 has-text-danger'>
                   <i className="fa fa-user-circle"></i>
-                  <sub className='has-text-danger is-size-6'>{requestCount}</sub>
+                  {!!requestCount && <sub className='has-text-danger is-size-6'>{requestCount}</sub>}
                 </h2>
               </Link>}
               <div
