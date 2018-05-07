@@ -1,53 +1,94 @@
 import React from 'react';
-import {addContact, removeContact} from '../firebase/db'
+import PropTypes from 'prop-types';
+import {contacts} from '../firebase/db'
+import {Link} from 'react-router-dom'
 
 class PersonMin extends React.Component {
   render() {
-    const {
-      username,
-      email,
-      image,
-      canAdd,
-      canRemove,
-    } = this.props
+    const {userUid, userData} = this.props
+    const {username, email, image} = userData
+    const {authUser, userContacts, userContactRequests} = this.context
+    const pendingRequests = userContactRequests.pending
+      ? Object
+        .values(userContactRequests.pending)
+        .map(val => val.target)
+      : []
+    const receivedRequests = userContactRequests.received
+      ? Object
+        .values(userContactRequests.received)
+        .map(val => val.sender)
+      : []
+
+    const isMe = (authUser.uid === userUid)
+    const isAlreadyContact = userContacts
+      .map(contact => contact.contactUid)
+      .includes(userUid)
+    const isPending = pendingRequests.includes(userUid)
+    const isAwaitingResponse = receivedRequests.includes(userUid)
+
+    const conversationUid = isAlreadyContact
+      ? userContacts.filter(contact => contact.contactUid === userUid)[0].conversationUid
+      : null;
+      
     return (
-      <section className='title'>
+      <div to={`/private/contact/${userUid}`} className='title'>
         <div className="card">
           <div className="card-content">
             <div className="media">
-              <div className="media-left">
+              <Link className="media-left" to={`/private/contact/${userUid}`}>
                 <figure className="image is-96x96">
                   <img className='round-up small-picture default-user-image' src={image} alt=""/>
                 </figure>
-              </div>
+              </Link>
               <div className="media-content">
                 <p className="title is-5">{username}</p>
                 <p className="subtitle is-7">{email}</p>
-                {(canAdd && !canRemove) && <button
-                  className='button is-rounded is-danger is-pulled-right'
-                  onClick={this.addContact}>Add</button>}
-                {canRemove && <button
-                  className='button is-rounded is-danger is-pulled-right'
-                  onClick={this.removeContact}>Remove</button>}
+
+                {!isMe && <section>
+                  {isAlreadyContact && <section>
+                    <button
+                      className='button is-rounded is-danger is-pulled-right'
+                      onClick={() => contacts.removeContact(authUser.uid, userUid, conversationUid)}>Remove contact</button>
+                  </section>}
+
+                  {isPending && <section>
+                    <button
+                      className='button is-rounded is-danger is-pulled-right'
+                      onClick={() => contacts.deleteContactRequestFromSender(authUser.uid, userUid)}>Cancel request</button>
+                  </section>}
+
+                  {isAwaitingResponse && <section className='field is-grouped is-pulled-right'>
+                    <p className='control'>
+                      <button
+                        className='button is-rounded is-danger'
+                        onClick={() => contacts.acceptContactRequest(authUser.uid, userUid)}>Accept</button>
+                    </p>
+                    <p className='control'>
+                      <button
+                        className='button is-rounded is-danger'
+                        onClick={() => contacts.deleteContactRequestFromRecipient(authUser.uid, userUid)}>Decline</button>
+                    </p>
+                  </section>}
+
+                  {(!isAlreadyContact && !isPending && !isAwaitingResponse) && <section>
+                    <button
+                      className='button is-rounded is-danger is-pulled-right'
+                      onClick={() => contacts.sendContactRequest(authUser.uid, userUid)}>Send request</button>
+                  </section>}
+                </section>}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     )
   }
 
-  addContact = () => {
-    const {authUserUid, userUid, updateContacts} = this.props;
-    addContact(authUserUid, userUid);
-    updateContacts()
-  }
-
-  removeContact = () => {
-    const {authUserUid, userUid, updateContacts} = this.props;
-    removeContact(authUserUid, userUid);
-    updateContacts()
-  }
 }
 
+PersonMin.contextTypes = {
+  authUser: PropTypes.object,
+  userContacts: PropTypes.object,
+  userContactRequests: PropTypes.object
+}
 export default PersonMin

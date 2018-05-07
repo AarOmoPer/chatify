@@ -15,7 +15,7 @@ class App extends React.Component{
     return(
       <section>
         <BrowserRouter>
-            <section className='hero is-fullheight'>
+            <section className='hero'>
               <Route exact path='/' component={SignIn} />
               <Route exact path='/public' component={Public} />
               <Route path='/private' component={Private} />

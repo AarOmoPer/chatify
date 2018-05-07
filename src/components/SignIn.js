@@ -1,7 +1,7 @@
 import React from 'react';
 import {auth} from '../firebase'
 import {Redirect} from 'react-router-dom'
-import {createUser} from '../firebase/db'
+import {users} from '../firebase/db'
 import PropTypes from 'prop-types'
 
 class SignIn extends React.Component {
@@ -14,7 +14,10 @@ class SignIn extends React.Component {
             ? <Redirect to='/private'/>
             : <section>
               <h1 className='title is-size-1'>Chatify</h1>
-              <button className='button is-danger is-rounded' type='button' onClick={this.handleSignIn}>Sign in</button>
+              <button
+                className='button is-danger is-rounded'
+                type='button'
+                onClick={this.handleSignIn}>Sign in</button>
             </section>}
         </section>
       </section>
@@ -25,8 +28,8 @@ class SignIn extends React.Component {
     auth
       .doSignInWithGoogle()
       .then(res => {
-        const user = res.user
-        createUser(user.uid, user.displayName, user.email)
+        const {user} = res
+        users.createUser(user.uid, user.displayName, user.email, user.photoURL)
       })
   }
 }
