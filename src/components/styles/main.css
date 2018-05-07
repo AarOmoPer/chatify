@@ -36,6 +36,13 @@
   max-height: 96px;
 }
 
+.tiny-picture{
+  min-width: 64px;
+  max-width: 64px;
+  min-height: 64px;
+  max-height: 64px;
+}
+
 .medium-space{
   min-height: 40px;
   min-width: 100%;
