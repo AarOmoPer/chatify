@@ -1,30 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import BackButton from './BackButton'
+import {BackButton} from './navButtons'
 
 import PersonMin from './PersonMin'
-import {getContacts, findContact} from '../firebase/db'
+import {contacts} from '../firebase/db'
 
 class People extends React.Component {
   state = {
-    contacts: null,
     searchTerm: '',
     searchResults: {}
   }
-
-  componentDidMount(props){
-    const {authUser} = this.context
-    getContacts(authUser.uid).then(contacts => this.setState({contacts: contacts || ['']}))
-  }
-
   render() {
-    const {searchTerm, searchResults, contacts} = this.state;
+    const {searchTerm, searchResults} = this.state;
     const {authUser} = this.context;
-    const searchResultsData = Object.values(searchResults);
+    const searchResultsKeys = Object.keys(searchResults);
     return (
       <section className=''>
-        <BackButton destination='/private'/> {authUser && <section className='hero-body'>
-          {contacts && <section className='container'>
+        <BackButton destination='/private'/>
+        <section className='hero-body'>
+          <section className='container'>
             <section className='title'>
               <input
                 className='input'
@@ -32,37 +26,27 @@ class People extends React.Component {
                 value={searchTerm}
                 placeholder='Find people by email...'/>
             </section>
-            {!searchResultsData.length && <h1 className='has-text-danger'>There are no users fitting your search term.</h1>}
-            {searchResultsData.map((person, ind) => {
-              const userUid = Object.keys(searchResults)[ind];
-              return <PersonMin
-                {...person}
-                key={ind}
-                canAdd={userUid !== authUser.uid}
-                canRemove={contacts.includes(userUid)}
-                userUid={userUid}
-                updateContacts={this.updateContacts}
-                authUserUid={authUser.uid}/>
-            })}
-          </section>}
-        </section>}
+            {searchResultsKeys.length
+              ? searchResultsKeys.map(key => <PersonMin
+                userUid={key}
+                userData={searchResults[key]}
+                isNotMe={key !== authUser.uid}/>)
+              : <h1 className='has-text-danger'>There are no users fitting your search term.</h1>}
+          </section>
+        </section>
       </section>
     )
   }
-
   updateSearchTerm = event => {
     const searchTerm = event.target.value
     this.setState({searchTerm})
     searchTerm
-      ? findContact(searchTerm).then(users => this.setState({
-        searchResults: users || {}
-      }))
+      ? contacts
+        .findContact(searchTerm)
+        .then(users => this.setState({
+          searchResults: users || {}
+        }))
       : this.setState({searchResults: {}})
-  }
-
-  updateContacts = () => {
-    const {authUser} = this.context
-    setTimeout(() => getContacts(authUser.uid).then(contacts => this.setState({contacts})), 400)
   }
 }
 
