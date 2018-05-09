@@ -15,6 +15,15 @@
   background-color: indianred;
 }
 
+.is-ice{
+  background-color: white;
+}
+
+.small-top-bottom-padding{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .large-picture{
   min-width: 256px;
   max-width: 256px;
@@ -59,4 +68,17 @@
   min-height: 180px;
   max-height: 180px;
   overflow: scroll;
+}
+
+.message-block{
+  margin-top: 30px;
+}
+
+.message-bubble{
+  background-color: rgb(241, 241, 241);
+  padding: 10px;
+  /* width: 50px; */
+  max-width: 70%;
+  border-radius: 20px;
+  /* word-wrap: no-wrap; */
 }

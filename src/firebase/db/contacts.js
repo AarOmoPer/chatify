@@ -89,10 +89,10 @@ export const getContactRequests = (uid, callBack) => db
   .ref(`requests/${uid}`)
   .on('value', res => {
     const contactRequests = res.val();
-    const pending = contactRequests.pending
+    const pending = (contactRequests && contactRequests.pending)
       ? Promise.all(Object.values(contactRequests.pending).map(request => users.getUserOnce(request.target).then(userDetails => Object.assign(userDetails, request))))
       : null;
-    const received = contactRequests.received
+    const received = (contactRequests && contactRequests.received)
       ? Promise.all(Object.values(contactRequests.received).map(request => users.getUserOnce(request.sender).then(userDetails => Object.assign(userDetails, request))))
       : null;
     Promise

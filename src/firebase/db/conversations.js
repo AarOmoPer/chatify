@@ -37,9 +37,14 @@ export const getPrivateConversation = (conversationUid, uid, callBack) => db
 
 // Update
 
-export const sendMessage = (conversationUid, message) => db
+export const sendTextMessage = (uid, conversationUid, message) => db
   .ref(`conversations/${conversationUid}/messages`)
-  .push(message)
+  .push({
+    type: 'text',
+    body: message,
+    createdAt: Date.now(),
+    senderUid: uid
+  })
   .then(() => db.ref(`conversations/${conversationUid}/lastMessageTime`).set(Date.now()))
 
 // Delete

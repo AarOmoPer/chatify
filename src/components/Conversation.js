@@ -1,12 +1,16 @@
 import React from 'react';
 
 import PropTypes from 'prop-types'
-import {BackButton} from './navButtons'
+import {ConversationNav} from './navButtons'
 import {conversations} from '../firebase/db'
+
+import './styles/conversation.css'
 
 class Conversation extends React.Component {
   state = {
-    conversationData: null
+    conversationUid: null,
+    conversationData: null,
+    newMessage: ''
   }
 
   componentDidMount() {
@@ -15,71 +19,81 @@ class Conversation extends React.Component {
       .location
       .pathname
       .split('/private/conversation/')[1];
+    this.setState({conversationUid})
     const {authUser} = this.context
     conversations.getPrivateConversation(conversationUid, authUser.uid, conversationData => this.setState({conversationData}))
   }
 
   render() {
-    const {conversationData} = this.state
+    const {conversationData, newMessage, conversationUid} = this.state
+    const {authUser} = this.context
+    const messages = conversationData
+      ? (conversationData.messages
+        ? Object.values(conversationData.messages)
+        : null)
+      : null
     const contactData = conversationData
       ? conversationData.contactData
       : null
     return (
-      <section className=''>
-        <BackButton destination={'/private'}/>
-        <section className='hero-body'>
+      <section id='convoPage' className=''>
+        <ConversationNav
+          destination={'/private'}
+          displayName={contactData
+          ? contactData
+            .username
+            .split(' ')[0]
+          : ''}/>
+        <section className='hero-body' onLoad={() => window.scrollTo(0, 1000)}>
           <section className='container'>
             <section className=''>
-              <article className="media">
-                <figure className="media-left">
-                  <p className="image is-64x64">
-                    <img
-                      className='round-up default-user-image tiny-picture'
-                      src={contactData && contactData.image}
-                      alt=''/>
-                  </p>
-                </figure>
-                <div className="media-content">
-                  <div className="content">
-                    {contactData && <section className=''>
-                      <h1 className='title is-3'>{contactData.username}</h1>
-                      <h1 className='subtitle is-5 has-text-weight-normal has-text-danger'>{contactData.email}</h1>
-                    </section>}
-                  </div>
-                </div>
-              </article>
-              <section className='card'>
-                Hello
-              </section>
-            </section>
-          </section>
-        </section>
+              <section className='conversation-window'>
 
-        <section className='hero-foot'>
-          <section className='hero-body'>
-            <section className='container'>
-              <article class="media">
-                <div class="media-content">
-                  <div class="field">
-                    <p class="control">
-                      <textarea class="textarea" placeholder="Write a message..."></textarea>
-                    </p>
-                  </div>
-                </div>
-                <div class="media-right">
-                  <div class="level-left">
-                    <div class="level-item">
-                      <a class="button is-danger round-up">Send</a>
-                    </div>
-                  </div>
-                </div>
-              </article>
+                {messages && messages.map(message => <p className={`message-block ${(message.senderUid === authUser.uid) && 'has-text-right'}`}>
+                  <span className='message-bubble'>
+                    {message.body}
+                  </span>
+                </p>)}
+              </section>
+
+              <section className='navbar is-fixed-bottom'>
+                <section className='hero-body is-ice small-top-bottom-padding'>
+                  <section className='container'>
+                    <article className="media">
+                      <div className="media-content">
+                        <div className="field">
+                          <p className="control">
+                            <textarea
+                              className="textarea no-outline"
+                              value={newMessage}
+                              onChange={this.updateMessage}
+                              placeholder="Write a message..."></textarea>
+                          </p>
+                        </div>
+                      </div>
+                      <div className="media-right">
+                        <div className="level-left">
+                          <div className="level-item">
+                            {!!newMessage
+                              ? <a
+                                  className="button is-danger round-up"
+                                  onClick={() => conversations.sendTextMessage(authUser.uid, conversationUid, newMessage).then(() => this.setState({newMessage: ''}))}>Send</a>
+                              : <a className="button is-danger round-up" disabled>Send</a>}
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </section>
+                </section>
+              </section>
             </section>
           </section>
         </section>
       </section>
     )
   }
+
+  updateMessage = e => this.setState({newMessage: e.target.value})
 }
 
 Conversation.contextTypes = {
