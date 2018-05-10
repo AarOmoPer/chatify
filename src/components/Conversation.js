@@ -22,6 +22,11 @@ class Conversation extends React.Component {
     this.setState({conversationUid})
     const {authUser} = this.context
     conversations.getPrivateConversation(conversationUid, authUser.uid, conversationData => this.setState({conversationData}))
+    this.scrollToBottom();
+  }
+
+  componentDidUpdate(){
+    this.scrollToBottom();
   }
 
   render() {
@@ -51,10 +56,23 @@ class Conversation extends React.Component {
 
                 {messages && messages.map(message => <p
                   className={`message-block ${ (message.senderUid === authUser.uid) && 'has-text-right'}`}>
-                    <span className={`message-bubble has-text-left ${ (message.senderUid === authUser.uid) ? 'is-red has-text-white' : 'light-gray'}`}>
-                      {message.body}
-                    </span>
+                  <span
+                    className={`message-bubble has-text-left ${ (message.senderUid === authUser.uid)
+                    ? 'is-red has-text-white'
+                    : 'light-gray'}`}>
+                    {message.body}
+                  </span>
                 </p>)}
+
+                <div
+                  style={{
+                  float: "left",
+                  clear: "both"
+                }}
+                  ref={el => {
+                  this.messagesEnd = el;
+                }}></div>
+
               </section>
 
               <section className='navbar is-fixed-bottom'>
@@ -95,6 +113,11 @@ class Conversation extends React.Component {
   }
 
   updateMessage = e => this.setState({newMessage: e.target.value})
+  scrollToBottom = () => {
+    this
+      .messagesEnd
+      .scrollIntoView({behavior: "smooth"});
+  }
 }
 
 Conversation.contextTypes = {
