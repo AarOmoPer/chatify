@@ -49,10 +49,11 @@ class Conversation extends React.Component {
             <section className=''>
               <section className='conversation-window'>
 
-                {messages && messages.map(message => <p className={`message-block ${(message.senderUid === authUser.uid) && 'has-text-right'}`}>
-                  <span className='message-bubble'>
-                    {message.body}
-                  </span>
+                {messages && messages.map(message => <p
+                  className={`message-block ${ (message.senderUid === authUser.uid) && 'has-text-right'}`}>
+                    <span className={`message-bubble has-text-left ${ (message.senderUid === authUser.uid) ? 'is-red has-text-white' : 'light-gray'}`}>
+                      {message.body}
+                    </span>
                 </p>)}
               </section>
 
@@ -64,7 +65,7 @@ class Conversation extends React.Component {
                         <div className="field">
                           <p className="control">
                             <textarea
-                              className="textarea no-outline"
+                              className="textarea message-input"
                               value={newMessage}
                               onChange={this.updateMessage}
                               placeholder="Write a message..."></textarea>
