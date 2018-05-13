@@ -7,15 +7,20 @@ import './styles/contacts.css'
 
 class Contacts extends React.Component {
   render() {
+    const tempStyle = {
+      'white-space': 'nowrap',
+      'width': '200px',
+      overflow: 'hidden',
+      'text-overflow': 'hidden',
+    }
     const {userContacts} = this.context
     return (
       <section className=''>
-        <section className='contacts-rack'>
-          {userContacts && userContacts.map(contact => <PersonIcon {...contact}/>)}
-        </section>
-        <Link to='private/people'>
+        <Link className={'box'} to='private/people'>
           <h1 className=''>Find people</h1>
         </Link>
+        {userContacts && userContacts.map(contact => <PersonIcon {...contact}/>)}
+        {userContacts && userContacts.map(contact => <PersonIcon {...contact}/>)}
       </section>
     )
   }

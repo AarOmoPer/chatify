@@ -22,7 +22,6 @@ class Conversation extends React.Component {
     this.setState({conversationUid})
     const {authUser} = this.context
     conversations.getPrivateConversation(conversationUid, authUser.uid, conversationData => this.setState({conversationData}))
-    this.scrollToBottom();
   }
 
   componentDidUpdate(){
@@ -116,7 +115,7 @@ class Conversation extends React.Component {
   scrollToBottom = () => {
     this
       .messagesEnd
-      .scrollIntoView({behavior: "smooth"});
+      .scrollIntoView({behavior: "instant"});
   }
 }
 

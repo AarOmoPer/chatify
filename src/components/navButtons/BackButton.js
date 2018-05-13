@@ -8,7 +8,7 @@ class BackButton extends React.Component {
       <section className=''>
         <section className='hero-head'>
           <header className="navbar is-fixed-top">
-            <div className="container">
+            <div className="container is-ice">
               <div className="navbar-brand">
                 <span className="navbar-item">
                   <Link to={destination || '../'}>
