@@ -22,9 +22,9 @@ class PersonIcon extends React.Component {
                 </p>
               </div>
             </div>
-            <div class="media-right">
+            {/* <div class="media-right">
               <i class="is-size-4 has-text-danger fa fa-user-circle"></i>
-            </div>
+            </div> */}
           </article>
       </Link>
     )

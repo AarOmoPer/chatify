@@ -21,7 +21,7 @@ class People extends React.Component {
           <section className='container'>
             <section className='title'>
               <input
-                className='input'
+                className='input round-up'
                 onChange={this.updateSearchTerm}
                 value={searchTerm}
                 placeholder='Find people by email...'/>

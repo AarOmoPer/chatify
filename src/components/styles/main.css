@@ -10,6 +10,9 @@
 .medium-margin-right{
   margin-right: 25px; 
 }
+.medium-margin-bottom{
+  margin-bottom: 25px; 
+}
 
 .is-red{
   background-color: hsl(348, 100%, 61%);
