@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 
-class BackButton extends React.Component {
+class ConversationNav extends React.Component {
   render() {
-    const {destination} = this.props;
+    const {destination, displayName, openContactProfile} = this.props;
     return (
       <section className=''>
         <section className='hero-head'>
@@ -19,6 +19,9 @@ class BackButton extends React.Component {
                     </span>
                   </Link>
                 </span>
+                <span className="navbar-item">
+                    <a onClick={openContactProfile} className='title is-5'>{displayName}</a>
+                </span>
               </div>
             </div>
           </header>
@@ -28,4 +31,4 @@ class BackButton extends React.Component {
   }
 }
 
-export default BackButton;
+export default ConversationNav;

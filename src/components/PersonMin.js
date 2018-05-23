@@ -32,8 +32,7 @@ class PersonMin extends React.Component {
       
     return (
       <div to={`/private/contact/${userUid}`} className='title'>
-        <div className="card">
-          <div className="card-content">
+        <div className="box">
             <div className="media">
               <Link className="media-left" to={`/private/contact/${userUid}`}>
                 <figure className="image is-96x96">
@@ -78,7 +77,6 @@ class PersonMin extends React.Component {
                 </section>}
               </div>
             </div>
-          </div>
         </div>
       </div>
     )

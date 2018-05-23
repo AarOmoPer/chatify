@@ -9,58 +9,43 @@ class Person extends React.Component {
     userData: null
   }
 
-  componentDidMount = () => {
-    const contactUid = this
-      .props
-      .location
-      .pathname
-      .split('/private/contact/')[1];
-    users
-      .getUserOnce(contactUid)
-      .then(userData => this.setState({userData}))
-  }
-
   render() {
-    const {userData} = this.state;
+    const {openState, close, contactData} = this.props
     return (
       <section className=''>
-        <BackButton destination={'/private'}/>
-        <section className='hero-body'>
-          <section className='container'>
+        <div class={`modal ${openState && 'is-active'}`}>
+          <div class="modal-background"></div>
+          <div class="modal-content">
             <section className='title flex-container'>
               <figure className="image is-256x256 large-picture">
                 <img
                   className='round-up large-picture default-user-image'
                   alt=''
-                  src={userData && userData.image
-                  ? userData.image
+                  src={contactData && contactData.image
+                  ? contactData.image
                   : ""}/>
               </figure>
             </section>
-            <h1 className='title has-text-centered has-text-danger'>{userData
-                ? userData.username
+            <h1 className='title has-text-centered has-text-danger'>{contactData
+                ? contactData.username
                 : 'Loading'}
             </h1>
-            <h1 className='subtitle has-text-centered is-6'>{userData
-                ? userData.email
+            <h1 className='subtitle has-text-centered has-text-white is-6'>{contactData
+                ? contactData.email
                 : 'Loading'}
             </h1>
-            
-            {/* <button
-              className='button is-rounded is-danger is-pulled-right'
-              onClick={() => null}>Send request
-            </button> */}
 
-            {/* <section className='field is-grouped is-pulled-right'>
+            <section className='field is-grouped is-pulled-right'>
               <p className='control'>
-                <button className='button is-rounded is-danger' onClick={() => null}>Accept</button>
+                <button className='button is-rounded is-danger' onClick={() => null}>Block</button>
               </p>
               <p className='control'>
-                <button className='button is-rounded is-danger' onClick={() => null}>Decline</button>
+                <button className='button is-rounded is-danger' onClick={() => null}>Remove contact</button>
               </p>
-            </section> */}
-          </section>
-        </section>
+            </section>
+          </div>
+          <button class="modal-close is-large" onClick={close} aria-label="close"></button>
+        </div>
       </section>
     )
   }

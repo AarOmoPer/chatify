@@ -19,9 +19,11 @@ class Requests extends React.Component {
           <section className='container'>
             <h1 className='title is-4'>Contact requests</h1>
             <section className='title'>
+              <span className='is-size-5 has-text-weight-normal'>Pending</span>&nbsp;
               {view
-                ? <i class="fa fa-toggle-on has-text-danger is-size-3" onClick={this.toggleView}></i>
-                : <i class="fa fa-toggle-off has-text-danger is-size-3" onClick={this.toggleView}></i>}
+                ? <i class="fa fa-toggle-on has-text-danger is-size-4" onClick={this.toggleView}></i>
+                : <i class="fa fa-toggle-off has-text-danger is-size-4" onClick={this.toggleView}></i>}&nbsp;
+                <span className='is-size-5 has-text-weight-normal'>Received</span>
             </section>
 
             {(view && userContactRequests && userContactRequests.received) && <section>

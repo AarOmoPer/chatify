@@ -16,7 +16,7 @@ class HomeNav extends React.Component {
     return (
       <section className='hero-head'>
         <nav className="navbar is-fixed-top">
-          <section className='container is-plain-white'>
+          <section className='container is-ice'>
             <div className="navbar-brand">
               <Link className="navbar-item" to='/private/profile'>
                 <h1 className='title is-4 has-text-danger'>{userDetails && userDetails
