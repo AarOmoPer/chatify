@@ -4,10 +4,13 @@ import PropTypes from 'prop-types'
 import {ConversationNav} from './navButtons'
 import {conversations} from '../firebase/db'
 
+import Person from './Person'
+
 import './styles/conversation.css'
 
 class Conversation extends React.Component {
   state = {
+    openContactProfile: false,
     conversationUid: null,
     conversationData: null,
     newMessage: ''
@@ -29,7 +32,7 @@ class Conversation extends React.Component {
   }
 
   render() {
-    const {conversationData, newMessage, conversationUid} = this.state
+    const {openContactProfile, conversationData, newMessage, conversationUid} = this.state
     const {authUser} = this.context
     const messages = conversationData
       ? (conversationData.messages
@@ -41,8 +44,10 @@ class Conversation extends React.Component {
       : null
     return (
       <section id='convoPage' className=''>
+        <Person openState={openContactProfile} contactData={contactData} close={this.closeContactProfile} />
         <ConversationNav
           destination={'/private'}
+          openContactProfile={this.openContactProfile}
           displayName={contactData
           ? contactData
             .username
@@ -111,6 +116,8 @@ class Conversation extends React.Component {
     )
   }
 
+  openContactProfile = () => this.setState({openContactProfile: true})
+  closeContactProfile = () => this.setState({openContactProfile: false})
   updateMessage = e => this.setState({newMessage: e.target.value})
   scrollToBottom = () => {
     this

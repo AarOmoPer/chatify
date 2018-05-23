@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 class ConversationNav extends React.Component {
   render() {
-    const {destination, displayName} = this.props;
+    const {destination, displayName, openContactProfile} = this.props;
     return (
       <section className=''>
         <section className='hero-head'>
@@ -20,7 +20,7 @@ class ConversationNav extends React.Component {
                   </Link>
                 </span>
                 <span className="navbar-item">
-                    <span className='title is-5'>{displayName}</span>
+                    <a onClick={openContactProfile} className='title is-5'>{displayName}</a>
                 </span>
               </div>
             </div>

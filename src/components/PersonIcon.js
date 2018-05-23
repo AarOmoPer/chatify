@@ -18,7 +18,7 @@ class PersonIcon extends React.Component {
               <div class="content">
                 <p className=''>
                   <h1 className='title is-4'>{username.split(' ')[0]}</h1>
-                  <h1 className='subtitle has-text-weight-light is-6'>{email}</h1>
+                  <h1 className='subtitle has-text-weight-light is-6 is-clipped'>{email}</h1>
                 </p>
               </div>
             </div>
