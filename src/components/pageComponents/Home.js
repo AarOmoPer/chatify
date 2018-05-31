@@ -1,8 +1,6 @@
 import React from 'react';
-
 import {HomeNav} from '../navBar'
-
-import Contacts from './Contacts'
+import Contacts from '../subComponents/Contacts'
 
 class Home extends React.Component{
   render(){

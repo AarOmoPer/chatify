@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {contacts} from '../../firebase/db'
-import {Link} from 'react-router-dom'
 
 class PersonMin extends React.Component {
   render() {
@@ -34,11 +33,11 @@ class PersonMin extends React.Component {
       <div to={`/private/contact/${userUid}`} className='title'>
         <div className="box">
             <div className="media">
-              <Link className="media-left" to={`/private/contact/${userUid}`}>
+              <section className="media-left">
                 <figure className="image is-96x96">
                   <img className='round-up small-picture default-user-image' src={image} alt=""/>
                 </figure>
-              </Link>
+              </section>
               <div className="media-content">
                 <p className="title is-5">{username}</p>
                 <p className="subtitle is-7">{email}</p>

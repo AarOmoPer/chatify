@@ -11,7 +11,7 @@ class PersonIcon extends React.Component {
           <article class="media">
             <figure class="media-left">
               <p class="image is-64x64">
-                <img className='round-up default-user-image' src={image || ""}/>
+                <img className='round-up default-user-image' src={image || ""} alt=""/>
               </p>
             </figure>
             <div class="media-content">

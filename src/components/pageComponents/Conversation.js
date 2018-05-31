@@ -53,7 +53,7 @@ class Conversation extends React.Component {
             .username
             .split(' ')[0]
           : ''}/>
-        <section className='hero-body' onLoad={() => window.scrollTo(0, 1000)}>
+        <section className='hero-body'>
           <section className='container'>
             <section className=''>
               <section className='conversation-window'>
