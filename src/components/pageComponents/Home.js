@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {HomeNav} from './navButtons'
+import {HomeNav} from '../navBar'
 
 import Contacts from './Contacts'
 

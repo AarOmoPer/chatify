@@ -1,12 +1,12 @@
 import React from 'react';
 
 import PropTypes from 'prop-types'
-import {ConversationNav} from './navButtons'
-import {conversations} from '../firebase/db'
+import {ConversationNav} from '../navBar'
+import {conversations} from '../../firebase/db'
 
 import Person from './Person'
 
-import './styles/conversation.css'
+import '../styles/conversation.css'
 
 class Conversation extends React.Component {
   state = {

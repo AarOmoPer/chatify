@@ -1,7 +1,7 @@
 import React from 'react';
-import {auth} from '../firebase'
+import {auth} from '../../firebase'
 import {Redirect} from 'react-router-dom'
-import {users} from '../firebase/db'
+import {users} from '../../firebase/db'
 import PropTypes from 'prop-types'
 
 class SignIn extends React.Component {

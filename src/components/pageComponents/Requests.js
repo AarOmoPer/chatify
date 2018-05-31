@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import PersonMin from './PersonMin';
+import PersonMin from '../subComponents/PersonMin';
 
-import {BackButton} from './navButtons'
+import {BackButton} from '../navBar'
 
 class Requests extends React.Component {
   state = {

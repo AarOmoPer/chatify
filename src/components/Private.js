@@ -1,13 +1,8 @@
 import React from 'react';
-import {withAuthorization, withUserData} from './higherOrderComponents'
-import {Route} from 'react-router-dom'
+import { withAuthorization, withUserData } from './higherOrderComponents'
+import { Route } from 'react-router-dom'
 
-import Home from './Home'
-import Profile from './Profile'
-import People from './People'
-import Person from './Person'
-import Requests from './Requests'
-import Conversation from './Conversation'
+import { Home, Profile, People, Person, Requests, Conversation } from './pageComponents'
 
 class Private extends React.Component {
   render() {

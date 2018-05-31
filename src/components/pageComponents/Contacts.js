@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import PersonIcon from './PersonIcon'
+import PersonIcon from '../subComponents/PersonIcon'
 import {Link} from 'react-router-dom'
 
-import './styles/contacts.css'
+import '../styles/contacts.css'
 
 class Contacts extends React.Component {
   render() {

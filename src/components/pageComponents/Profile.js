@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {users} from '../firebase/db'
-import {storeUserImage} from '../firebase/store'
+import {users} from '../../firebase/db'
+import {storeUserImage} from '../../firebase/store'
 
-import {BackButton} from './navButtons'
+import {BackButton} from '../navBar'
 
 class Profile extends React.Component {
   state = {

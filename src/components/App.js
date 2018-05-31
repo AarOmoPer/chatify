@@ -6,7 +6,7 @@ import 'bulma/css/bulma.css'
 import 'font-awesome/css/font-awesome.min.css';
 import './styles/main.css'
 
-import SignIn from './SignIn'
+import SignIn from './pageComponents/SignIn'
 import Public from './Public'
 import Private from './Private'
 

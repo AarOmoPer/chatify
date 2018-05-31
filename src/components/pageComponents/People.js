@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {BackButton} from './navButtons'
+import {BackButton} from '../navBar'
 
-import PersonMin from './PersonMin'
-import {contacts} from '../firebase/db'
+import PersonMin from '../subComponents/PersonMin'
+import {contacts} from '../../firebase/db'
 
 class People extends React.Component {
   state = {

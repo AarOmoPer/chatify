@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {contacts} from '../firebase/db'
+import {contacts} from '../../firebase/db'
 import {Link} from 'react-router-dom'
 
 class PersonMin extends React.Component {
